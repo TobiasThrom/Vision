@@ -5,6 +5,6 @@ A collection of computer vision scritps
 An algorithm that uses canny edge detection and hough lines to detect driving lanes in images.
 
 Input image: 
-![alt text](https://github.com/TobiasThrom/Vision/blob/master/LaneDetection/input/solidYellowLeft.jpg "Input image")<!-- .element height="50%" width="50%" -->
+![Input](https://github.com/TobiasThrom/Vision/blob/master/LaneDetection/input/solidYellowLeft.jpg | width=480)
 Output image: 
-![alt text](https://github.com/TobiasThrom/Vision/blob/master/LaneDetection/output/lines-solidYellowLeft.jpg "Output image")<!-- .element height="50%" width="50%" -->
+![Output](https://github.com/TobiasThrom/Vision/blob/master/LaneDetection/output/lines-solidYellowLeft.jpg | width=480)
