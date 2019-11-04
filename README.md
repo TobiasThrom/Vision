@@ -1,6 +1,9 @@
 # Vision
 A collection of computer vision scritps
 
+## [General](/General)
+A collection of general image manipulation scripts
+
 ## [LaneDetection](/LaneDetection)
 An algorithm that uses canny edge detection and hough lines to detect driving lanes in images.
 
