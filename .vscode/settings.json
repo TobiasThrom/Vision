@@ -2,5 +2,8 @@
     "python.pythonPath": "D:\\Programme\\Anaconda\\python.exe",
     "python.linting.pylintEnabled": true,
     "python.linting.flake8Enabled": false,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.linting.pylintArgs": ["--extension-pkg-whitelist=cv2"]
+
+
 }
