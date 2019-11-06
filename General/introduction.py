@@ -3,12 +3,17 @@ import cv2
 import matplotlib.pyplot as plt
 
 def main():
+    e1 = cv2.getTickCount()
 
-    # Load an color image in grayscale
+    #Load an color image in grayscale
     #img = cv2.imread('LaneDetection\input\solidWhiteCurve.jpg', 0)
     #plt.imshow(img, cmap='gray')
     #plt.show()
     create_random_color_image()
+
+    e2 = cv2.getTickCount()
+    time = (e2 - e1)/ cv2.getTickFrequency()
+    print("The code was executed in ",time,"seconds.")
 
 
 def create_random_bw_image(x=540, y=960):
