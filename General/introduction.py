@@ -1,6 +1,6 @@
 import numpy as np 
 import cv2
-import matplotlib.pyplot as plt
+
 
 def main():
     e1 = cv2.getTickCount()
@@ -9,7 +9,8 @@ def main():
     #img = cv2.imread('LaneDetection\input\solidWhiteCurve.jpg', 0)
     #plt.imshow(img, cmap='gray')
     #plt.show()
-    create_random_color_image()
+    #create_random_color_image()
+    corner_detection()
 
     e2 = cv2.getTickCount()
     time = (e2 - e1)/ cv2.getTickFrequency()
@@ -21,8 +22,9 @@ def create_random_bw_image(x=540, y=960):
     for i in range(rand_image.shape[0]):
         for j in range(rand_image.shape[1]):
             rand_image[i, j] = np.random.randint(0, 255)
-    plt.imshow(rand_image)
-    plt.show()
+    cv2.imshow('image',rand_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     return rand_image
 
 def create_random_color_image(x=540, y=960):
@@ -33,9 +35,26 @@ def create_random_color_image(x=540, y=960):
             G_random = np.random.randint(0, 255)
             R_random = np.random.randint(0, 255)
             rand_image[i, j] = [B_random, G_random, R_random]
-    plt.imshow(rand_image)
-    plt.show()
+    cv2.imshow('image',rand_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     return rand_image
+
+def corner_detection():
+    img = cv2.imread('General\images\haus.jpg', cv2.COLOR_BGR2RGB)
+    gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+    gray = np.float32(gray)
+    dst = cv2.cornerHarris(gray,2,5,0.04)
+    dst = cv2.dilate(dst,None)
+    img[dst>0.1*dst.max()]=[0,0,255]
+
+    cv2.imshow('image', gray)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    cv2.imwrite('General\output\output-haus.jpg', img)
+
+
 
 
 if __name__ == "__main__":
