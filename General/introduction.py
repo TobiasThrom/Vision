@@ -41,7 +41,7 @@ def create_random_color_image(x=540, y=960):
     return rand_image
 
 def corner_detection():
-    img = cv2.imread('General\images\haus.jpg', cv2.COLOR_BGR2RGB)
+    img = cv2.imread('General\images\chessboard.jpeg', cv2.COLOR_BGR2RGB)
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
     gray2 = np.float32(gray)
     dst = cv2.cornerHarris(gray2,2,5,0.04)
@@ -60,7 +60,7 @@ def corner_detection():
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    cv2.imwrite('General\output\output-haus.jpg', img)
+    cv2.imwrite('General\output\output-chessboard.jpeg', img)
 
 
 
