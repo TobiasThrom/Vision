@@ -1,0 +1,6 @@
+# Don't track content of the input folder in Detection
+Detection/input/
+
+# Compiled source 
+*.caffemodel
+*.prototxt.txt
