@@ -44,13 +44,15 @@ def corner_detection():
     img = cv2.imread('General\images\chessboard.jpeg', cv2.COLOR_BGR2RGB)
     gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
     gray2 = np.float32(gray)
+
+    #Harris Corner Detection
     dst = cv2.cornerHarris(gray2,2,5,0.04)
     dst = cv2.dilate(dst,None)
     img[dst>0.1*dst.max()]=[0,0,255]
 
+    #Shi-Tomasi Corner Detector
     corners = cv2.goodFeaturesToTrack(gray,25,0.05,20)
     corners = np.int0(corners)
-
     for i in corners:
         x,y = i.ravel()
         cv2.circle(img,(x,y),3,255,-1)
