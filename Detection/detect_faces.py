@@ -2,7 +2,8 @@ import numpy as np
 import cv2
 
 # load Caffe model from specified path
-caffe_net = cv2.dnn.readNetFromCaffe("Detection/deploy.prototxt.txt", "Detection/res10_300x300_ssd_iter_140000.caffemodel")
+caffe_net = cv2.dnn.readNetFromCaffe("Detection/nets/deploy.prototxt.txt", "Detection/nets/res10_300x300_ssd_iter_140000.caffemodel")
+tf_net = cv2.dnn.readNetFromTensorflow("Detection/nets/ssd_mobilenet_v2_coco_2018_03_29/frozen_inference_graph.pb", "Detection/nets/ssd_mobilenet_v2_coco_2018_03_29/ssd_mobilenet_v2_coco_2018_03_29.pbtxt")
 
 # load the input image and construct an input blob for the image
 # by resizing to a fixed 300x300 pixels and then normalizing it
@@ -14,9 +15,12 @@ blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0,(300, 300), (104
 caffe_net.setInput(blob)
 detections = caffe_net.forward()
 
+tf_net.setInput(blob)
+detections2 = tf_net.forward()
+
 detection_confidence = 0.2
 
-# loop over the detections
+# loop over the detections of caffe_net
 for i in range(0, detections.shape[2]):
 	# extract the confidence (i.e., probability) associated with the
 	# prediction
@@ -37,6 +41,27 @@ for i in range(0, detections.shape[2]):
 		cv2.rectangle(image, (startX, startY), (endX, endY),(0, 0, 255), 2)
 		cv2.putText(image, text, (startX, y),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
+
+# loop over the detections of tf_net
+for i in range(0, detections2.shape[2]):
+	# extract the confidence (i.e., probability) associated with the
+	# prediction
+	confidence = detections2[0, 0, i, 2]
+
+	# filter out weak detections by ensuring the `confidence` is
+	# greater than the minimum confidence
+	if confidence > detection_confidence:
+		# compute the (x, y)-coordinates of the bounding box for the
+		# object
+		box = detections2[0, 0, i, 3:7] * np.array([w, h, w, h])
+		(startX, startY, endX, endY) = box.astype("int")
+ 
+		# draw the bounding box of the face along with the associated
+		# probability
+		text = "{:.2f}%".format(confidence * 100)
+		y = startY - 10 if startY - 10 > 10 else startY + 10
+		cv2.rectangle(image, (startX, startY), (endX, endY),(0, 255, 0), 2)
+		cv2.putText(image, text, (startX, y),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 # show the output image
 cv2.imshow("Output", image)
 cv2.waitKey(0)

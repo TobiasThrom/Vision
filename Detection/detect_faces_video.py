@@ -5,7 +5,7 @@ import cv2
 
 # load Caffe model from specified path
 print("[INFO] loading model...")
-caffe_net = cv2.dnn.readNetFromCaffe("Detection/deploy.prototxt.txt", "Detection/res10_300x300_ssd_iter_140000.caffemodel")
+caffe_net = cv2.dnn.readNetFromCaffe("Detection/nets/deploy.prototxt.txt", "Detection/nets/res10_300x300_ssd_iter_140000.caffemodel")
 
 # initialize the video stream and allow the cammera sensor to warmup
 print("[INFO] starting video stream...")
