@@ -27,6 +27,10 @@ with tf.Session() as sess:
                    feed_dict={'image_tensor:0': inp.reshape(1, inp.shape[0], inp.shape[1], 3)})
 
     # Visualize detected bounding boxes.
+
+    with open('Detection/nets/ssd_mobilenet_v2_coco_2018_03_29/labelmap.txt') as f:
+        my_list = list(f)
+
     num_detections = int(out[0][0])
     for i in range(num_detections):
         classId = int(out[3][0][i])
@@ -38,6 +42,11 @@ with tf.Session() as sess:
             right = bbox[3] * cols
             bottom = bbox[2] * rows
             cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (125, 255, 51), thickness=2)
+            y_text = y - 10 if y - 10 > 10 else y + 10
+            text = my_list[classId]
+            text += " - {:.2f}%".format(score * 100)
+            cv.putText(img, text, (int(x), int(y_text)),cv.FONT_HERSHEY_SIMPLEX, 0.5, (125, 255, 51), 2)
+
 
 cv.imshow('TensorFlow MobileNet-SSD', img)
 cv.waitKey()
