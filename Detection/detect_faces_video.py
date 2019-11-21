@@ -10,10 +10,12 @@ caffe_net = cv2.dnn.readNetFromCaffe("Detection/deploy.prototxt.txt", "Detection
 # initialize the video stream and allow the cammera sensor to warmup
 print("[INFO] starting video stream...")
 vs = cv2.VideoCapture('Detection\input\MexicanStandoff.mp4')
-time.sleep(2.0)
+# time.sleep(2.0)
+
+ret = True
 
 # loop over the frames from the video stream
-while True:
+while ret:
 	# grab the frame from the threaded video stream
 	ret, frame = vs.read()
 	# grab the frame dimensions and convert it to a blob
